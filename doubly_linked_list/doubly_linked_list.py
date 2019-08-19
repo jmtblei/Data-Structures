@@ -84,13 +84,37 @@ class DoublyLinkedList:
   #as the new tail of the list. Don't forget to handle 
   #the old tail node's next pointer accordingly."""
   def add_to_tail(self, value):
-    pass
+    new_node = ListNode(value)
+    self.length += 1
+    #same empty list check as add_to_head
+    if not self.head and not self.tail:
+      self.head = new_node
+      self.tail = new_node
+    # H <-> N <-> prevT <-> AddT
+    else:
+      self.tail.next = new_node
+      new_node.prev = self.tail
+      self.tail = new_node
 
   #"""Removes the List's current tail node, making the 
   #current tail's previous node the new tail of the List.
   #Returns the value of the removed Node."""
   def remove_from_tail(self):
-    pass
+    self.length -= 1
+    #if list is empty, return none (can't remove what's not there!)
+    if not self.head and not self.tail:
+      return None
+    #if list only has 1 value, head and tail are same value
+    if self.head is self.tail:
+      current_tail = self.tail
+      self.head = None
+      self.tail = None
+      return current_tail.value
+    # H <-> N <-> nextT <-> RemoveT
+    else:
+      self.tail = self.tail.prev
+      self.tail.next = None
+      return self.tail.value
 
   #"""Removes the input node from its current spot in the 
   #List and inserts it as the new head node of the List."""
@@ -105,7 +129,14 @@ class DoublyLinkedList:
   #"""Removes a node from the list and handles cases where
   #the node was the head or the tail"""
   def delete(self, node):
-    pass
+    if self.head is node:
+      self.remove_from_head()
+    if self.tail is node:
+      self.remove_from_tail()
+    #if list contains only 1 node it can be head or tail, thus same value
+    if self.head is self.tail:
+      #remove using either head or tai;
+      self.remove_from_head()
     
   #"""Returns the highest value currently in the list"""
   def get_max(self):
