@@ -16,7 +16,12 @@ class Heap:
     # key to be deleted with minum infinite by calling decreaseKey(). 
     # After decreaseKey(), the minus infinite value must reach root, 
     # so we call extractMin() to remove the key.
-    pass
+    last_index = self.get_size() - 1
+    self.storage[0], self.storage[last_index] = self.storage[last_index], self.storage[0]
+    deleted = self.storage.pop()
+    # print('deleted')
+    self._sift_down(0)
+    return deleted
 
   def get_max(self):
     pass
