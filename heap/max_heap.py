@@ -16,7 +16,12 @@ class Heap:
     # key to be deleted with minum infinite by calling decreaseKey(). 
     # After decreaseKey(), the minus infinite value must reach root, 
     # so we call extractMin() to remove the key.
-    pass
+    last_index = self.get_size()-1
+    self.storage[0], self.storage[last_index] = self.storage[last_index], self.storage[0]
+    deleted = self.storage.pop()
+    # print('deleted')
+    self._sift_down(0)
+    return deleted
 
   def get_max(self):
     return self.storage[0]
@@ -32,4 +37,18 @@ class Heap:
       index = parent_index
 
   def _sift_down(self, index):
-    pass
+    end = len(self.storage) - 1
+    child = index * 2 + 1
+  
+    while child <= end:
+      rchild = child + 1
+      # check if rchild has higher priority than the left child
+      if rchild <= end and self.storage[rchild] > self.storage[child]:
+        child = rchild
+      # check if parent has lower priority than child 
+      if self.storage[child] > self.storage[index]:
+        self.storage[child], self.storage[index] = self.storage[index], self.storage[child]
+        index = child
+        child = 2 * index + 1
+      else:
+        break
